@@ -1,6 +1,6 @@
 // import { AiFillHome } from "react-icons/ai";
 import { FaCalendar, FaHome } from "react-icons/fa";
-import { HiOutlineCog8Tooth } from "react-icons/hi2";
+// import { HiOutlineCog8Tooth } from "react-icons/hi2";
 // import { MdOutlineAddHomeWork } from "react-icons/md";
 
 export interface RouteConfig {
@@ -24,36 +24,36 @@ export const appRoutes: RouteConfig[] = [
     icon: <FaCalendar />,
     roles: ["CLIENTE"],
   },
-  {
-    label: "Configuraciones Generales",
-    icon: <HiOutlineCog8Tooth />,
-    roles: ["ADMIN"],
-    path: "/configuraciones-generales",
-    // children: [
-    //   {
-    //     label: "Usuarios",
-    //     path: "/usuarios",
-    //     // icon: <FaHistory />,
-    //     roles: ["ADMIN", "OPERADOR"],
-    //   },
-    //   {
-    //     label: "Roles",
-    //     path: "/roles",
-    //     // icon: <FaHistory />,
-    //     roles: ["ADMIN", "OPERADOR"],
-    //   },
-    //   {
-    //     label: "Proveedores",
-    //     path: "/proveedores",
-    //     // icon: <FaHistory />,
-    //     roles: ["ADMIN", "OPERADOR"],
-    //   },
-    //   {
-    //     label: "Eventos",
-    //     path: "/eventos",
-    //     // icon: <FaHistory />,
-    //     roles: ["ADMIN", "OPERADOR"],
-    //   },
-    // ],
-  },
+  // {
+  //   label: "Configuraciones Generales",
+  //   icon: <HiOutlineCog8Tooth />,
+  //   roles: ["ADMIN"],
+  //   path: "/configuraciones-generales",
+  //   // children: [
+  //   //   {
+  //   //     label: "Usuarios",
+  //   //     path: "/usuarios",
+  //   //     // icon: <FaHistory />,
+  //   //     roles: ["ADMIN", "OPERADOR"],
+  //   //   },
+  //   //   {
+  //   //     label: "Roles",
+  //   //     path: "/roles",
+  //   //     // icon: <FaHistory />,
+  //   //     roles: ["ADMIN", "OPERADOR"],
+  //   //   },
+  //   //   {
+  //   //     label: "Proveedores",
+  //   //     path: "/proveedores",
+  //   //     // icon: <FaHistory />,
+  //   //     roles: ["ADMIN", "OPERADOR"],
+  //   //   },
+  //   //   {
+  //   //     label: "Eventos",
+  //   //     path: "/eventos",
+  //   //     // icon: <FaHistory />,
+  //   //     roles: ["ADMIN", "OPERADOR"],
+  //   //   },
+  //   // ],
+  // },
 ];

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { CustomButton } from "@/components/CustomButton/CustomButton";
 import { ContentBox } from "@/components/ContentBox/ContentBox";
 
@@ -31,8 +31,8 @@ const eventoEjemplo: EventoDetalle = {
 	id: 1,
 	titulo: "Tech Conference 2024",
 	descripcion:
-		"A comprehensive tech conference covering the latest trends in software development, AI, and cybersecurity.",
-	fecha: "July 20, 2024",
+		"Una conferencia técnica que cubre las últimas tendencias en desarrollo de software, IA y ciberseguridad.",
+	fecha: "Julio 20, 2024",
 	hora: "9:00 AM - 5:00 PM",
 	ubicacion: "Tech Center, 123 Innovation Drive, Techville",
 	coordenadas: {
@@ -66,7 +66,7 @@ const eventoEjemplo: EventoDetalle = {
 };
 
 export const Evento = () => {
-	const { id } = useParams();
+	// const { id } = useParams();
 	const navigate = useNavigate();
 	const [evento] = useState<EventoDetalle>(eventoEjemplo);
 
@@ -83,15 +83,15 @@ export const Evento = () => {
 		}
 	};
 
-	const handleEdit = () => {
-		console.log("Editar evento:", id);
-		// Navegar a la página de edición o abrir modal
-	};
+	// const handleEdit = () => {
+	// 	console.log("Editar evento:", id);
+	// 	// Navegar a la página de edición o abrir modal
+	// };
 
-	const handleCancel = () => {
-		console.log("Cancelar evento:", id);
-		// Lógica para cancelar el evento
-	};
+	// const handleCancel = () => {
+	// 	console.log("Cancelar evento:", id);
+	// 	// Lógica para cancelar el evento
+	// };
 
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
