@@ -3,7 +3,7 @@ import PublicRoute from "./PublicRoute";
 import ProtectedRoute from "./ProtectedRoute";
 import { MainLayout } from "../layouts/MainLayout";
 import { LoginPage } from "../features/Login/LoginPage";
-import { Error404 } from "@/features/Error404/Error404";
+// import { Error404 } from "@/features/Error404/Error404";
 import { Dashboard } from "@/features/Dashboard/Dashboard";
 
 import { Eventos } from "@/features/Eventos/Eventos";
@@ -12,7 +12,7 @@ import { Proveedores } from "@/features/Proveedores/Proveedores";
 import { Proveedor } from "@/features/Proveedores/Proveedor/Proveedor";
   
 export const router = createBrowserRouter([
-  { path: "/", element: <Navigate to="/login" />, errorElement: <Error404 /> },
+  { path: "/", element: <Navigate to="/login" />, errorElement: <p>Error 404</p> },
   {
     path: "/login",
     element: <PublicRoute />,
