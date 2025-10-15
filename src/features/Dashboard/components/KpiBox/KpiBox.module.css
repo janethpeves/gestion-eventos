@@ -1,0 +1,31 @@
+.kpi__item {
+	width: 100%;
+
+	display: flex;
+	justify-content: space-between;
+
+	background: var(--surface-card);
+	box-sizing: border-box;
+	padding: 1.5rem;
+
+	box-shadow: var(--card-shadow);
+	border-radius: 24px;
+}
+
+/* .kpi__item:last-child {
+  margin-bottom: 0;
+} */
+
+.kpi__title {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.kpi__subtitle {
+	font-size: 35px;
+	font-weight: 600;
+}
+
+.kpi__icon {
+	font-size: 25px;
+}
