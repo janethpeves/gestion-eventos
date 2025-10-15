@@ -36,7 +36,7 @@ export const DateField = ({
 
 	const calendarStyles: React.CSSProperties = {
 		height: "32px",
-		fontSize: "13px",
+		fontSize: "16px",
 		borderRadius: "4px",
 	};
 

@@ -5,7 +5,6 @@ import { TextBoxField } from "@/components/TextBoxField/TextBoxField";
 import { TextAreaField } from "@/components/TextAreaField/TextAreaField";
 import { DateField } from "@/components/DateField/DateField";
 import { SelectField } from "@/components/SelectField/SelectField";
-import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { CustomButton } from "@/components/CustomButton/CustomButton";
 
@@ -109,7 +108,7 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 			{/* Time */}
 			<div className="space-y-1">
 				<div className="flex flex-col gap-1">
-					<label className="text-gray-700 dark:text-gray-300 text-xs">
+					<label className="text-gray-700 dark:text-gray-300 text-base">
 						Hora
 					</label>
 					<Calendar
