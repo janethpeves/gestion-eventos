@@ -36,7 +36,7 @@ export const TextBoxField = ({
 }: TextBoxFieldProps) => {
 	const styles: React.CSSProperties = {
 		width: labelWidth,
-		fontSize: "12px",
+		fontSize: "16px",
 	};
 	const stylesContainer: React.CSSProperties = {
 		width: containerWidth,
@@ -62,7 +62,7 @@ export const TextBoxField = ({
 					style={{
 						width: "100%",
 						height: "30px",
-						fontSize: "12px",
+						fontSize: "16px",
 					}}
 					autoComplete="off"
 					disabled={disabled}

@@ -27,7 +27,7 @@ export const DateField = ({
 }: Props) => {
 	const styles: React.CSSProperties = {
 		width: labelWidth,
-		fontSize: "12px",
+		fontSize: "16px",
 		marginBottom: "4px",
 	};
 	const stylesContainer: React.CSSProperties = {

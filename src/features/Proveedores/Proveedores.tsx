@@ -143,9 +143,9 @@ export const Proveedores = () => {
       <div className="flex flex-col gap-6 p-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold dark:text-white mb-2">Service Providers</h1>
-          <p className="text-blue-600 dark:text-blue-400 text-sm">
-            Browse and select service providers for your event.
+          <h1 className="text-3xl font-bold dark:text-white mb-2">Servicios de Proveedores</h1>
+          <p className="text-[var(--primary-color-light)] dark:text-blue-400 text-sm">
+            Busca y selecciona servicios de proveedores para tu evento.
           </p>
         </div>
 
@@ -167,7 +167,7 @@ export const Proveedores = () => {
             </svg>
             <input
               type="text"
-              placeholder="Search for providers"
+              placeholder="Buscar proveedores"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
@@ -199,7 +199,7 @@ export const Proveedores = () => {
 
         {/* Available Providers */}
         <div>
-          <h2 className="text-xl font-bold dark:text-white mb-4">Available Providers</h2>
+          <h2 className="text-xl font-bold dark:text-white mb-4">Proveedores Disponibles</h2>
           
           {paginatedProveedores.length === 0 ? (
             <div className="text-center py-12 text-gray-500 dark:text-gray-400">
@@ -228,7 +228,7 @@ export const Proveedores = () => {
                       <div className="flex items-center gap-2 mb-2">
                         {renderStars(proveedor.rating)}
                         <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {proveedor.rating} • {proveedor.reviews} reviews
+                          {proveedor.rating} • {proveedor.reviews} reseñas
                         </span>
                       </div>
 
@@ -240,10 +240,10 @@ export const Proveedores = () => {
 
                     {/* View Details Button */}
                     <CustomButton
-                      text="View Details"
+                      text="Ver Detalles"
                       onClick={() => navigate(`/proveedores/${proveedor.id}`)}
                       backgroundButton="transparent"
-                      colorP="#3B82F6"
+                      colorP="var(--primary-color-light)"
                       additionalClassName="border border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                     />
                   </div>

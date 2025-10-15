@@ -36,7 +36,7 @@ export const SelectField = ({
 }: SelectFieldProps) => {
 	const styles: React.CSSProperties = {
 		width: labelWidth,
-		fontSize: "12px",
+		fontSize: "16px",
 	};
 	const stylesContainer: React.CSSProperties = {
 		width: containerWidth,

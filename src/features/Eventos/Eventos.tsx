@@ -104,19 +104,19 @@ export const Eventos = () => {
     // Por ejemplo, hacer un POST a tu API
     
     // Ejemplo de cómo agregar al estado local:
-    // const eventoConId = {
-    //   id: eventos.length + 1,
-    //   fecha: formatearFecha(nuevoEvento.fecha),
-    //   hora: formatearHora(nuevoEvento.hora),
-    //   titulo: nuevoEvento.titulo,
-    //   descripcion: nuevoEvento.descripcion,
-    //   ubicacion: nuevoEvento.ubicacion,
-    //   imagen: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400",
-    //   asistentes: [],
-    //   totalAsistentes: 0,
-    //   estado: nuevoEvento.estado,
-    // };
-    // setEventos([...eventos, eventoConId]);
+  //   const eventoConId = {
+  //     id: eventos.length + 1,
+  //     fecha: formatearFecha(nuevoEvento.fecha),
+  //     hora: formatearHora(nuevoEvento.hora),
+  //     titulo: nuevoEvento.titulo,
+  //     descripcion: nuevoEvento.descripcion,
+  //     ubicacion: nuevoEvento.ubicacion,
+  //     imagen: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400",
+  //     asistentes: [],
+  //     totalAsistentes: 0,
+  //     estado: nuevoEvento.estado,
+  //   };
+  //   setEventos([...eventos, eventoConId]);
   };
 
   return (
@@ -185,7 +185,7 @@ export const Eventos = () => {
                 </svg>
               }
               text="Crear Evento"
-              backgroundButton="#3B82F6"
+              backgroundButton="var(--primary-color-light)"
               colorP="#ffffff"
               onClick={addModal.onVisibleModal}
             />
@@ -212,7 +212,7 @@ export const Eventos = () => {
               <div className="p-4">
                 {/* Date and Time */}
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">
+                  <span className="text-[var(--primary-color-light)] dark:text-blue-400 font-semibold text-sm">
                     {evento.fecha}
                   </span>
                   <span className="text-gray-400">•</span>
@@ -289,7 +289,7 @@ export const Eventos = () => {
                 <CustomButton
                   text="Ver Detalles"
                   onClick={() => navigate(`/eventos/${evento.id}`)}
-                  backgroundButton="#3B82F6"
+                  backgroundButton="var(--primary-color-light)"
                   colorP="#ffffff"
                   additionalClassName="w-full justify-center"
                   icon={

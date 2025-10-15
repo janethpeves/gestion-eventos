@@ -6,12 +6,10 @@ import { logoutUser } from "@/store/slices/auth/thunks";
 
 import { FaSignOutAlt } from "react-icons/fa";
 
-import logo from "@/assets/img/logo.png";
+import logo from "@/assets/img/logo-p.png";
 
 import { appRoutes } from "../../routes/routeConfig";
 import { currentUser } from "@/utils/currentUser";
-// import { appRoutesCitas } from "@/routes/routeAppCitas";
-// import { appRoutesCartas } from "@/routes/routeCartas";
 
 interface SidebarMenuProps {
 	onClose?: () => void;
@@ -34,12 +32,6 @@ export const SidebarMenu: React.FC<SidebarMenuProps> = ({ onClose, showCloseButt
 	};
 
 	const filteredMenuItems = appRoutes.filter((route) => route.roles.includes(user?.role || ""));
-	// const filteredMenuItemsCitas = appRoutesCitas.filter((route) =>
-	// 	route.roles.includes(user?.role || "")
-	// );
-	// const filteredMenuItemsCartas = appRoutesCartas.filter((route) =>
-	// 	route.roles.includes(user?.role || "")
-	// );
 
 	return (
 		<div className="w-[300px] h-screen p-6 fixed top-0 left-0 overflow-y-auto grid grid-rows-[auto_auto_auto_auto_auto_auto_1fr] gap-5 bg-[#f9fbfc] border-r border-[rgba(155,155,155,0.2)] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-[#f1f1f1] [&::-webkit-scrollbar-thumb]:bg-[#888] [&::-webkit-scrollbar-thumb]:rounded-sm [&::-webkit-scrollbar-thumb:hover]:bg-[#555] z-[9]">
@@ -64,7 +56,7 @@ export const SidebarMenu: React.FC<SidebarMenuProps> = ({ onClose, showCloseButt
 
 			<img className="w-25" src={logo} alt="logo de k-salud" />
 
-			<h2 className="!text-lg text-[#333]">Gestión de Licencias</h2>
+			<h2 className="!text-lg text-[#333]">Gestión de Eventos</h2>
 
 			<div className="flex flex-col gap-3">
 				{filteredMenuItems.map((item) => {
@@ -74,7 +66,7 @@ export const SidebarMenu: React.FC<SidebarMenuProps> = ({ onClose, showCloseButt
 							className={`flex items-center gap-3 p-2.5 rounded-lg text-[#333] cursor-pointer transition-colors hover:bg-[#e9eef3] ${
 								location.pathname === item.path ? "bg-[#e9eef3]" : ""
 							}`}
-							onClick={() => handleNavigate(item.path)}
+							onClick={() => handleNavigate(item.path || "")}
 						>
 							<div className="w-5 h-5 flex items-center justify-center">{item.icon}</div>
 							<span className="text-sm">{item.label}</span>

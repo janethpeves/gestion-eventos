@@ -141,13 +141,13 @@ export const Dashboard = () => {
     {
       type: "bar" as const,
       label: "Eventos Realizados",
-      backgroundColor: "#19A8E4",
+      backgroundColor: "#9E061F",
       data: [12, 15, 8, 20, 18, 25, 22, 16, 19, 14, 17, 21],
     },
     {
       type: "bar" as const,
       label: "Eventos Cancelados",
-      backgroundColor: "#87CEEB",
+      backgroundColor: "#FAE0E4",
       data: [2, 1, 3, 1, 2, 1, 0, 2, 1, 3, 1, 1],
     },
   ];
@@ -163,7 +163,7 @@ export const Dashboard = () => {
       type: "line" as const,
       label: "Participantes",
       backgroundColor: "rgba(40, 167, 69, 0.1)",
-      borderColor: "#28a745",
+      borderColor: "#9E061F",
       data: [45, 52, 38, 67, 58, 72, 65, 48, 55, 42, 61, 68],
     },
   ];

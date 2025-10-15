@@ -43,7 +43,7 @@ export const TextAreaField = ({
 }: TextAreaFieldProps) => {
 	const labelStyles: React.CSSProperties = {
 		width: labelWidth,
-		fontSize: "12px",
+		fontSize: "16px",
 		whiteSpace: labelWrap,
 	};
 

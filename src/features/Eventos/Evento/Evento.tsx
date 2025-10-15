@@ -99,7 +99,7 @@ export const Evento = () => {
 			<ContentBox>
 				<div className="mb-2">
 					<h1 className="text-3xl font-bold dark:text-white mb-2">{evento.titulo}</h1>
-					<p className="text-blue-600 dark:text-blue-400 text-sm">{evento.descripcion}</p>
+					<p className="text-[var(--primary-color-light)] dark:text-blue-400 text-sm">{evento.descripcion}</p>
 				</div>
 			</ContentBox>
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -122,7 +122,7 @@ export const Evento = () => {
 
 						{/* Location */}
 						<div className="mb-4">
-							<label className="text-blue-600 dark:text-blue-400 text-sm">Ubicación</label>
+							<label className="text-[var(--primary-color-light)] dark:text-blue-400 text-sm">Ubicación</label>
 							<p className="text-gray-900 dark:text-white font-medium">{evento.ubicacion}</p>
 						</div>
 
@@ -194,7 +194,7 @@ export const Evento = () => {
 						<CustomButton
 							text="Agregar Proveedores"
 							onClick={()=>navigate("/proveedores")}
-							backgroundButton="#3B82F6"
+							backgroundButton="var(--primary-color-light)"
 							colorP="#ffffff"
 							additionalClassName="w-full justify-center"
 						/>

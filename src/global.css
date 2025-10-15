@@ -12,7 +12,7 @@ body {
 
 :root {
 	/* --primary-color-light: #00867E; */
-	--primary-color-light: #19A8E4;
+	--primary-color-light: #9E061F;
 	--secondary-color-light: #F0F9FF;
 	/* --secondary-color-light: #56578D; */
 	/* --secondary-color-light: #BABBE8; */
@@ -91,7 +91,7 @@ input[type="radio"]:checked {
 
 /* Accordion Prime */
 .p-accordion .p-accordion-header .p-accordion-header-link {
-	font-size: 12px !important;
+	font-size: 14px !important;
 	padding: 0.2rem !important;
 	background-color: var(--primary-color-light) !important;
 	color: white !important;
@@ -99,7 +99,7 @@ input[type="radio"]:checked {
 }
 .p-accordion-content {
 	padding: 0.5rem !important;
-	font-size: 12px !important;
+	font-size: 14px !important;
 	max-height: 120px !important;
 	overflow-y: auto !important;
 }

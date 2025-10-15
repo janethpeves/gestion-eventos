@@ -7,6 +7,7 @@ import { DateField } from "@/components/DateField/DateField";
 import { SelectField } from "@/components/SelectField/SelectField";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
+import { CustomButton } from "@/components/CustomButton/CustomButton";
 
 interface PropsAddModal {
 	postFetchData?: (data: EventoFormData) => void;
@@ -62,13 +63,12 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 			{/* Event Title */}
 			<div className="space-y-1">
 				<TextBoxField
-					textLabel="Titulo"
+					textLabel="Título"
 					value={values.titulo || ""}
 					name="titulo"
 					onChange={handleChange}
 					onBlur={handleBlur}
 					placeholder="Enter event title"
-					toUpperCase={false}
 				/>
 				{touched.titulo && errors.titulo && (
 					<span className="text-red-500 text-xs font-medium">{errors.titulo}</span>
@@ -136,7 +136,6 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 					onChange={handleChange}
 					onBlur={handleBlur}
 					placeholder="Enter location"
-					toUpperCase={false}
 				/>
 				{touched.ubicacion && errors.ubicacion && (
 					<span className="text-red-500 text-xs font-medium">{errors.ubicacion}</span>
@@ -163,16 +162,12 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 			{/* Buttons */}
 			{postFetchData && (
 				<div className="flex justify-end gap-3 pt-2">
-					<Button
-						type="button"
-						className="p-button-sm p-button-outlined"
-						onClick={onHideModal}
-						label="CANCELAR"
-					/>
-					<Button
+					<CustomButton
+						text="GUARDAR"
+						onClick={handleSubmit}
 						type="submit"
-						className="p-button-sm p-button-info"
-						label="GUARDAR"
+						backgroundButton="var(--primary-color-light)"
+						colorP="#ffffff"
 					/>
 				</div>
 			)}
