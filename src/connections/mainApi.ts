@@ -1,4 +1,4 @@
-const serverBaseURL = "";
+const serverBaseURL = "http://31.220.74.216:3000";
 const testBaseURL = "http://localhost:4455/api";
 
 const urls = [serverBaseURL, testBaseURL];
