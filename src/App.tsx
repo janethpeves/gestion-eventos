@@ -1,20 +1,10 @@
-import { useEffect } from "react";
 import { RouterProvider } from "react-router";
 
-import { useAppDispatch, useAppSelector } from "./store/hooks";
-import { verifyLogin } from "./store/slices/auth/thunks";
+import { useAppSelector } from "./store/hooks";
 import { router } from "./routes/routes";
 
 export function App() {
-  const dispatch = useAppDispatch();
-  const { user, isLoading } = useAppSelector((state: any) => state.auth);
-  const accessToken = localStorage.getItem("at__hc-kb");
-
-  useEffect(() => {
-    if (!user && accessToken) {
-      dispatch(verifyLogin());
-    }
-  }, []);
+  const { isLoading } = useAppSelector((state) => state.auth);
 
   if (isLoading) return <div>Loading...</div>;
 

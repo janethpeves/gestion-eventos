@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useModal } from "@/hooks/useModal";
 import { PrimeModal } from "@/components/PrimeModal/PrimeModal";
 import { AddModal } from "./AddModal/AddModal";
@@ -8,101 +8,84 @@ import { PiPlus } from "react-icons/pi";
 import { TabMenuPrime } from "@/components/TabMenuPrime/TabMenuPrime";
 import type { MenuItem } from "primereact/menuitem";
 import { Paginator } from "primereact/paginator";
+import { useGetFetch } from "@/hooks/useGetFetch";
+import { usePostFetch } from "@/hooks/usePostFetch";
+import { useAppSelector } from "@/store/hooks";
 
 interface Proveedor {
-  id: number;
-  name: string;
-  category: string;
-  rating: number;
-  reviews: number;
-  description: string;
-  logo?: string;
-  logoColor?: string;
+  id: string;
+  nombre: string;
+  servicio: string;
+  puntaje: number;
+  cantidad_calificaciones: number;
+  descripcion: string;
+  email: string;
+  telefono: string;
+  ubicacion: string;
+  website: string;
+  nosotros: string;
+  User?: {
+    id: string;
+    nombre: string;
+    apellido: string;
+  };
 }
-
-const proveedoresData: Proveedor[] = [
-  {
-    id: 1,
-    name: "Culinary Catering",
-    category: "catering",
-    rating: 4.9,
-    reviews: 120,
-    description: "Exquisite catering services for all types of events.",
-    logoColor: "bg-orange-100",
-    logo: "🍽️"
-  },
-  {
-    id: 2,
-    name: "Grand Occasions Venue",
-    category: "venues",
-    rating: 4.7,
-    reviews: 238,
-    description: "Elegant venues for weddings, parties, and corporate events.",
-    logoColor: "bg-amber-900",
-    logo: "🏛️"
-  },
-  {
-    id: 3,
-    name: "Picture Perfect Photography",
-    category: "photographers",
-    rating: 4.8,
-    reviews: 95,
-    description: "Capture beautiful moments for your special moments.",
-    logoColor: "bg-gray-100",
-    logo: "📷"
-  },
-  {
-    id: 4,
-    name: "Decor Dreams",
-    category: "decorators",
-    rating: 4.6,
-    reviews: 67,
-    description: "Stunning decorations for weddings and event's ambiance.",
-    logoColor: "bg-amber-900",
-    logo: "🎨"
-  },
-  {
-    id: 5,
-    name: "Gourmet Catering Co.",
-    category: "catering",
-    rating: 4.5,
-    reviews: 156,
-    description: "Premium catering services with gourmet cuisine options.",
-    logoColor: "bg-orange-100",
-    logo: "👨‍🍳"
-  },
-  {
-    id: 6,
-    name: "Sound & Vision Solutions",
-    category: "venues",
-    rating: 4.9,
-    reviews: 201,
-    description: "Top-tier AV equipment and technical support.",
-    logoColor: "bg-green-800",
-    logo: "AV"
-  },
-];
 
 export const Proveedores = () => {
   const addModal = useModal();
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.auth);
+  const location = useLocation();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(6);
+  const state = location.state;
+  const eventId = state?.id;
+
+  const { data, isLoading, error, reloadFetchData } = useGetFetch("/companies");
+  const proveedoresData: Proveedor[] = data || [];
+
+  const postFetchData = usePostFetch("/companies", {
+    sectionName: "Proveedor",
+    reloadFetchData,
+    addModal,
+    toastMessages: {
+      success: "Proveedor creado exitosamente",
+      error: "Error al crear el Proveedor",
+    },
+  });
+
+  const mapServicioToCategory = (servicio: string): string => {
+    const servicioLower = servicio.toLowerCase();
+    if (servicioLower.includes("catering")) return "catering";
+    if (servicioLower.includes("fotograf")) return "photographers";
+    if (servicioLower.includes("decorador") || servicioLower.includes("decor"))
+      return "decorators";
+    if (servicioLower.includes("venue") || servicioLower.includes("local"))
+      return "venues";
+    return "all";
+  };
 
   const categoryTabs: MenuItem[] = [
     { label: "All", command: () => setActiveCategory("all") },
     { label: "Catering", command: () => setActiveCategory("catering") },
     { label: "Venues", command: () => setActiveCategory("venues") },
-    { label: "Photographers", command: () => setActiveCategory("photographers") },
+    {
+      label: "Photographers",
+      command: () => setActiveCategory("photographers"),
+    },
     { label: "Decorators", command: () => setActiveCategory("decorators") },
   ];
 
   const filteredProveedores = proveedoresData.filter((proveedor) => {
-    const matchesCategory = activeCategory === "all" || proveedor.category === activeCategory;
-    const matchesSearch = proveedor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         proveedor.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const category = mapServicioToCategory(proveedor.servicio);
+    const matchesCategory =
+      activeCategory === "all" || category === activeCategory;
+    const matchesSearch =
+      proveedor.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      proveedor.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      proveedor.servicio.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -111,7 +94,7 @@ export const Proveedores = () => {
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
-    
+
     return (
       <div className="flex items-center gap-1">
         {[...Array(5)].map((_, index) => (
@@ -121,8 +104,8 @@ export const Proveedores = () => {
               index < fullStars
                 ? "text-yellow-400 fill-current"
                 : index === fullStars && hasHalfStar
-                ? "text-yellow-400 fill-current"
-                : "text-gray-300 fill-current"
+                  ? "text-yellow-400 fill-current"
+                  : "text-gray-300 fill-current"
             }`}
             viewBox="0 0 20 20"
           >
@@ -133,17 +116,85 @@ export const Proveedores = () => {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onPageChange = (event: any) => {
     setFirst(event.first);
     setRows(event.rows);
   };
+
+  // Generar logo inicial del nombre
+  const getLogoInicial = (nombre: string) => {
+    return nombre.charAt(0).toUpperCase();
+  };
+
+  const getLogoColor = (id: string) => {
+    const colors = [
+      "bg-orange-100",
+      "bg-amber-900",
+      "bg-gray-100",
+      "bg-green-800",
+      "bg-blue-100",
+      "bg-purple-100",
+      "bg-pink-100",
+      "bg-red-100",
+    ];
+    const index = id.charCodeAt(0) % colors.length;
+    return colors[index];
+  };
+
+  // Manejo de estados de carga y error
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-6 p-6">
+        <div>
+          <h1 className="text-3xl font-bold dark:text-white mb-2">
+            Servicios de Proveedores
+          </h1>
+          <p className="text-[var(--primary-color-light)] dark:text-blue-400 text-sm">
+            Busca y selecciona servicios de proveedores para tu evento.
+          </p>
+        </div>
+        <div className="flex items-center justify-center h-64">
+          <p className="text-gray-500 dark:text-gray-400">
+            Cargando proveedores...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col gap-6 p-6">
+        <div>
+          <h1 className="text-3xl font-bold dark:text-white mb-2">
+            Servicios de Proveedores
+          </h1>
+          <p className="text-[var(--primary-color-light)] dark:text-blue-400 text-sm">
+            Busca y selecciona servicios de proveedores para tu evento.
+          </p>
+        </div>
+        <div className="flex flex-col items-center justify-center h-64 gap-4">
+          <p className="text-red-500">Error al cargar proveedores</p>
+          <CustomButton
+            text="Reintentar"
+            onClick={() => reloadFetchData()}
+            backgroundButton="var(--primary-color-light)"
+            colorP="#fff"
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="flex flex-col gap-6 p-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold dark:text-white mb-2">Servicios de Proveedores</h1>
+          <h1 className="text-3xl font-bold dark:text-white mb-2">
+            Servicios de Proveedores
+          </h1>
           <p className="text-[var(--primary-color-light)] dark:text-blue-400 text-sm">
             Busca y selecciona servicios de proveedores para tu evento.
           </p>
@@ -173,34 +224,40 @@ export const Proveedores = () => {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
             />
           </div>
-          <CustomButton
-            text="Agregar Proveedor"
-            onClick={addModal.onVisibleModal}
-            icon={<PiPlus size={16} />}
-            backgroundButton="var(--primary-color-light)"
-            colorP="#fff"
-          />
+          {user?.rol === "ADMIN" && (
+            <CustomButton
+              text="Agregar Proveedor"
+              onClick={addModal.onVisibleModal}
+              icon={<PiPlus size={16} />}
+              backgroundButton="var(--primary-color-light)"
+              colorP="#fff"
+            />
+          )}
         </div>
 
         {/* Category Tabs */}
         <div>
           <TabMenuPrime
             items={categoryTabs}
-            activeIndex={categoryTabs.findIndex((tab) => 
-              tab.command && activeCategory === (tab.label?.toLowerCase() || "all")
+            activeIndex={categoryTabs.findIndex(
+              (tab) =>
+                tab.command &&
+                activeCategory === (tab.label?.toLowerCase() || "all"),
             )}
             onTabChange={(e) => {
               const selected = categoryTabs[e.index];
               setActiveCategory(selected.label?.toLowerCase() || "all");
-              setFirst(0); // Reset pagination
+              setFirst(0);
             }}
           />
         </div>
 
         {/* Available Providers */}
         <div>
-          <h2 className="text-xl font-bold dark:text-white mb-4">Proveedores Disponibles</h2>
-          
+          <h2 className="text-xl font-bold dark:text-white mb-4">
+            Proveedores Disponibles ({filteredProveedores.length})
+          </h2>
+
           {paginatedProveedores.length === 0 ? (
             <div className="text-center py-12 text-gray-500 dark:text-gray-400">
               No se encontraron proveedores
@@ -214,37 +271,56 @@ export const Proveedores = () => {
                 >
                   <div className="flex items-start gap-4">
                     {/* Logo */}
-                    <div className={`w-16 h-16 ${proveedor.logoColor} rounded-lg flex items-center justify-center flex-shrink-0 text-2xl`}>
-                      {proveedor.logo}
+                    <div
+                      className={`w-16 h-16 ${getLogoColor(proveedor.id)} rounded-lg flex items-center justify-center flex-shrink-0 text-2xl font-bold ${
+                        getLogoColor(proveedor.id).includes("800")
+                          ? "text-white"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {getLogoInicial(proveedor.nombre)}
                     </div>
 
                     {/* Content */}
                     <div className="flex-1">
                       <h3 className="text-lg font-bold dark:text-white mb-1">
-                        {proveedor.name}
+                        {proveedor.nombre}
                       </h3>
-                      
-                      {/* Rating */}
+
+                      {/* Service Type */}
+                      <span className="inline-block px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded mb-2">
+                        {proveedor.servicio}
+                      </span>
+
+                      {/*
+
                       <div className="flex items-center gap-2 mb-2">
-                        {renderStars(proveedor.rating)}
+                        {renderStars(proveedor.puntaje)}
                         <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {proveedor.rating} • {proveedor.reviews} reseñas
+                          {proveedor.puntaje.toFixed(1)} •{" "}
+                          {proveedor.cantidad_calificaciones} reseñas
                         </span>
                       </div>
 
+                      Rating */}
+
                       {/* Description */}
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {proveedor.description}
+                        {proveedor.descripcion}
                       </p>
                     </div>
 
                     {/* View Details Button */}
                     <CustomButton
                       text="Ver Detalles"
-                      onClick={() => navigate(`/proveedores/${proveedor.id}`)}
-                      backgroundButton="transparent"
                       colorP="var(--primary-color-light)"
-                      additionalClassName="border border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                      onClick={() =>
+                        navigate(`/proveedores/${proveedor?.id}`, {
+                          state: { eventId },
+                        })
+                      }
+                      backgroundButton="transparent"
+                      additionalClassName="border border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 !dark:text-blue-700"
                     />
                   </div>
                 </div>
@@ -274,7 +350,10 @@ export const Proveedores = () => {
         onHideModal={addModal.onHideModal}
         width={500}
       >
-        <AddModal postFetchData={() => {}} onHideModal={addModal.onHideModal} />
+        <AddModal
+          postFetchData={postFetchData.postFetchData}
+          onHideModal={addModal.onHideModal}
+        />
       </PrimeModal>
     </>
   );

@@ -1,5 +1,10 @@
-import React, { createContext, useContext, useRef, type ReactNode } from 'react';
-import { Toast } from 'primereact/toast';
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  type ReactNode,
+} from "react";
+import { Toast } from "primereact/toast";
 
 interface ToastContextType {
   toast: React.RefObject<Toast | null>;
@@ -16,7 +21,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
 
   return (
     <ToastContext.Provider value={{ toast }}>
-      <Toast ref={toast} />
+      <Toast ref={toast} position="bottom-right" />
       {children}
     </ToastContext.Provider>
   );
@@ -25,7 +30,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
 export const useToast = (): ToastContextType => {
   const context = useContext(ToastContext);
   if (context === undefined) {
-    throw new Error('useToast must be used within a ToastProvider');
+    throw new Error("useToast must be used within a ToastProvider");
   }
   return context;
 };

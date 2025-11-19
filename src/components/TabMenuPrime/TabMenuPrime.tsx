@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import { TabMenu } from 'primereact/tabmenu';
-import type { MenuItem } from 'primereact/menuitem';
-import { classNames } from 'primereact/utils';
+import React, { useState } from "react";
+import { TabMenu } from "primereact/tabmenu";
+import type { MenuItem } from "primereact/menuitem";
+import { classNames } from "primereact/utils";
 
 interface TabMenuPrimeProps {
   items: MenuItem[];
   activeIndex?: number;
-  onTabChange?: (event: { index: number; originalEvent: React.SyntheticEvent }) => void;
+  onTabChange?: (event: {
+    index: number;
+    originalEvent: React.SyntheticEvent;
+  }) => void;
   className?: string;
   style?: React.CSSProperties;
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: "horizontal" | "vertical";
   scrollable?: boolean;
 }
 
@@ -17,33 +20,37 @@ export const TabMenuPrime: React.FC<TabMenuPrimeProps> = ({
   items,
   activeIndex = 0,
   onTabChange,
-  className = '',
+  className = "",
   style,
-  orientation = 'horizontal',
-  scrollable = true
+  orientation = "horizontal",
+  scrollable = true,
 }) => {
   const [activeTab, setActiveTab] = useState(activeIndex);
 
-  const handleTabChange = (event: { index: number; originalEvent: React.SyntheticEvent }) => {
+  const handleTabChange = (event: {
+    index: number;
+    originalEvent: React.SyntheticEvent;
+  }) => {
     setActiveTab(event.index);
     onTabChange?.(event);
   };
 
   const getTabMenuClasses = () => {
     return classNames(
-      'tab-menu-prime',
+      "tab-menu-prime",
       {
-        'tab-menu-vertical': orientation === 'vertical',
-        'tab-menu-scrollable': scrollable
+        "tab-menu-vertical": orientation === "vertical",
+        "tab-menu-scrollable": scrollable,
       },
-      className
+      className,
     );
   };
 
   return (
     <div className="w-full">
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           .tab-menu-prime .p-tabmenu-nav {
             display: flex !important;
             flex-direction: row !important;
@@ -199,8 +206,9 @@ export const TabMenuPrime: React.FC<TabMenuPrimeProps> = ({
               min-height: 24px !important;
             }
           }
-        `
-      }} />
+        `,
+        }}
+      />
       <TabMenu
         model={items}
         activeIndex={activeTab}
@@ -213,3 +221,4 @@ export const TabMenuPrime: React.FC<TabMenuPrimeProps> = ({
 };
 
 export default TabMenuPrime;
+

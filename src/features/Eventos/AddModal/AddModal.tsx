@@ -4,30 +4,27 @@ import * as Yup from "yup";
 import { TextBoxField } from "@/components/TextBoxField/TextBoxField";
 import { TextAreaField } from "@/components/TextAreaField/TextAreaField";
 import { DateField } from "@/components/DateField/DateField";
-import { SelectField } from "@/components/SelectField/SelectField";
 import { Calendar } from "primereact/calendar";
 import { CustomButton } from "@/components/CustomButton/CustomButton";
+import { useAppSelector } from "@/store/hooks";
 
 interface PropsAddModal {
-	postFetchData?: (data: EventoFormData) => void;
+	postFetchData?: (data: EventoFormDataAPI) => void;  
 	onHideModal?: () => void;
 }
 
-interface EventoFormData {
+interface EventoFormDataAPI {
 	titulo: string;
 	descripcion: string;
-	fecha: Date | null;
-	hora: Date | null;
+	fecha: string;  // ISO string
+	hora: string;   // ISO string
 	ubicacion: string;
-	estado: string;
+	userId: string;
 }
 
 export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
-	const estadoOptions = [
-		{ name: "Confirmado", value: "confirmado" },
-		{ name: "Pendiente", value: "pendiente" },
-		{ name: "Cancelado", value: "cancelado" },
-	];
+	// Obtener el usuario actual
+	const { user } = useAppSelector((state: any) => state.auth);
 
 	const { values, handleSubmit, handleChange, handleBlur, errors, touched, setFieldValue } = useFormik({
 		initialValues: {
@@ -36,11 +33,20 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 			fecha: null,
 			hora: null,
 			ubicacion: "",
-			estado: "",
 		},
 		onSubmit: (values) => {
-			if (postFetchData) {
-				postFetchData(values);
+			if (postFetchData && values.fecha && values.hora) {
+				// Transformar los datos al formato del API
+				const dataParaAPI: EventoFormDataAPI = {
+					titulo: values.titulo,
+					descripcion: values.descripcion,
+					fecha: values.fecha?.toISOString(),  // Convertir a ISO string
+					hora: values.hora?.toISOString(),    // Convertir a ISO string
+					ubicacion: values.ubicacion,
+					userId: user.id,  // Agregar el userId del usuario actual
+				};
+				
+				postFetchData(dataParaAPI);
 			}
 			console.log(values);
 			if (onHideModal) {
@@ -53,7 +59,6 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 			fecha: Yup.date().nullable().required("Este campo es requerido"),
 			hora: Yup.date().nullable().required("Este campo es requerido"),
 			ubicacion: Yup.string().required("Este campo es requerido"),
-			estado: Yup.string().required("Este campo es requerido"),
 		}),
 	});
 
@@ -67,7 +72,7 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 					name="titulo"
 					onChange={handleChange}
 					onBlur={handleBlur}
-					placeholder="Enter event title"
+					placeholder="Ingresa el título del evento"
 				/>
 				{touched.titulo && errors.titulo && (
 					<span className="text-red-500 text-xs font-medium">{errors.titulo}</span>
@@ -82,7 +87,7 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 					name="descripcion"
 					onChange={handleChange}
 					onBlur={handleBlur}
-					placeholder="Describe your event"
+					placeholder="Describe tu evento"
 					rows={4}
 					toUpperCase={false}
 				/>
@@ -116,7 +121,7 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 						onChange={(e) => setFieldValue("hora", e.value)}
 						timeOnly
 						hourFormat="24"
-						placeholder="Select time"
+						placeholder="Selecciona la hora"
 						className="w-full dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
 						style={{ height: "32px", fontSize: "12px" }}
 					/>
@@ -134,27 +139,10 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
 					name="ubicacion"
 					onChange={handleChange}
 					onBlur={handleBlur}
-					placeholder="Enter location"
+					placeholder="Ingresa la ubicación"
 				/>
 				{touched.ubicacion && errors.ubicacion && (
 					<span className="text-red-500 text-xs font-medium">{errors.ubicacion}</span>
-				)}
-			</div>
-
-			{/* Status */}
-			<div className="space-y-1">
-				<SelectField
-					textLabel="Estado"
-					name="estado"
-					value={values.estado}
-					onChange={(e) => setFieldValue("estado", e.value)}
-					options={estadoOptions}
-					optionLabel="name"
-					optionValue="value"
-					placeholder="Select status"
-				/>
-				{touched.estado && errors.estado && (
-					<span className="text-red-500 text-xs font-medium">{errors.estado}</span>
 				)}
 			</div>
 

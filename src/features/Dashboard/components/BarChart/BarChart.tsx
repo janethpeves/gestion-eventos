@@ -28,8 +28,8 @@ interface BarChartProps {
   onPeriodChange?: (period: { id: number; label: string }) => void;
 }
 
-export function BarChart({ 
-  title, 
+export function BarChart({
+  title,
   description = "Los datos mostrados son de los últimos 30 días",
   datasets,
   labels,
@@ -43,7 +43,7 @@ export function BarChart({
   height = 300,
   stacked = true,
   showLegend = true,
-  onPeriodChange
+  onPeriodChange,
 }: BarChartProps) {
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
@@ -52,12 +52,14 @@ export function BarChart({
   useEffect(() => {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue("--text-color");
-    const textColorSecondary = documentStyle.getPropertyValue("--text-color-secondary");
+    const textColorSecondary = documentStyle.getPropertyValue(
+      "--text-color-secondary",
+    );
     const surfaceBorder = documentStyle.getPropertyValue("--surface-border");
 
     const data = {
       labels,
-      datasets: datasets.map(dataset => ({
+      datasets: datasets.map((dataset) => ({
         ...dataset,
         borderColor: dataset.borderColor || dataset.backgroundColor,
         tension: dataset.type === "line" ? 0.4 : 0,
@@ -116,12 +118,18 @@ export function BarChart({
 
   return (
     <div className="card">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div>
           <h3>{title}</h3>
           <p style={{ fontSize: "13px" }}>{description}</p>
         </div>
-
+        {/*
         <div>
           <Dropdown
             value={selectedPeriod}
@@ -131,18 +139,26 @@ export function BarChart({
             style={{ minWidth: "120px" }}
           />
         </div>
+      */}
       </div>
 
       {summaryData.length > 0 && (
-        <div style={{ display: "flex", margin: "20px 0", gap: "25px", flexWrap: "wrap" }}>
+        <div
+          style={{
+            display: "flex",
+            margin: "20px 0",
+            gap: "25px",
+            flexWrap: "wrap",
+          }}
+        >
           {summaryData.map((item, index) => (
             <div key={index}>
               <p style={{ fontSize: "13px" }}>{item.label}</p>
-              <p 
-                style={{ 
-                  fontSize: "13px", 
+              <p
+                style={{
+                  fontSize: "13px",
                   fontWeight: "600",
-                  color: item.color || "inherit"
+                  color: item.color || "inherit",
                 }}
               >
                 {item.value}
@@ -158,3 +174,4 @@ export function BarChart({
     </div>
   );
 }
+

@@ -1,5 +1,5 @@
 // import { AiFillHome } from "react-icons/ai";
-import { FaCalendar, FaHome } from "react-icons/fa";
+import { FaHome, FaUser } from "react-icons/fa";
 // import { HiOutlineCog8Tooth } from "react-icons/hi2";
 // import { MdOutlineAddHomeWork } from "react-icons/md";
 
@@ -21,9 +21,20 @@ export const appRoutes: RouteConfig[] = [
   {
     label: "Eventos",
     path: "/eventos",
-    icon: <FaCalendar />,
-    roles: ["CLIENTE"],
+    // icon: <FaCalendar />,
+    roles: ["CLIENTE", "ADMIN"],
   },
+  {
+    label: "Clientes",
+    path: "/clientes",
+    icon: <FaUser />,
+    roles: ["ADMIN"],
+  },
+  // {
+  //   label: "Proveedor",
+  //   path: `/proveedores/:id`,
+  //   roles: ["PROVEEDOR"],
+  // }
   // {
   //   label: "Configuraciones Generales",
   //   icon: <HiOutlineCog8Tooth />,

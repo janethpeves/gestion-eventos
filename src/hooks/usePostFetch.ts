@@ -45,7 +45,7 @@ export const usePostFetch = (
     toastMessages = {},
     returnFullResponse = false,
     showToast = true, // Valor por defecto del toast a true
-  }: UsePostFetchOptions
+  }: UsePostFetchOptions,
 ) => {
   const navigate = useNavigate();
   const [isLoadingPost, setIsLoadingPost] = useState<boolean>(false);
@@ -73,17 +73,22 @@ export const usePostFetch = (
 
   const postFetchData = async (
     data: any,
+    id?: string,
     query?: string,
     isBlob?: boolean,
     pathUrl?: string,
-    headers?: any
+    headers?: any,
   ): Promise<any> => {
     setIsLoadingPost(true);
 
-    const promise = api.post(`${endPoint}${query ? `?${query}` : ""}`, data, {
-      headers,
-      responseType: isBlob ? "blob" : "json",
-    });
+    const promise = api.post(
+      `${endPoint}${id ? `${id}` : ""}${query ? `?${query}` : ""}`,
+      data,
+      {
+        headers,
+        responseType: isBlob ? "blob" : "json",
+      },
+    );
 
     if (showToast) {
       showPromiseToast(promise, {
