@@ -8,7 +8,7 @@ import { CustomButton } from "@/components/CustomButton/CustomButton";
 
 export const Clientes = () => {
   const addModal = useModal();
-  const getData = useGetFetch("/usuarios");
+  const getData = useGetFetch("/users");
   const data = getData.data || [];
   const registerUser = usePostFetch("/auth/register", {
     sectionName: "Registrando Usuario",
@@ -24,15 +24,15 @@ export const Clientes = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Listado de Clientes
+            Listado de Usuarios
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Listado detallado de todos los clientes registrados
+            Listado detallado de todos los usuarios registrados
           </p>
         </div>
 
         <CustomButton
-          text="Agregar Cliente"
+          text="Agregar Usuarios"
           onClick={() => addModal.onVisibleModal()}
           backgroundButton="var(--primary-color-light)"
           colorP="#ffffff"
@@ -47,7 +47,7 @@ export const Clientes = () => {
 
       {/* MODAL */}
       <PrimeModal
-        header="Agregar Cliente"
+        header="Nuevo Usuario"
         modalStatus={addModal.modalStatus}
         onHideModal={addModal.onHideModal}
         width={520}
@@ -67,7 +67,11 @@ const columns = [
   { nombre: "Nombre", campo: "nombre" },
   { nombre: "Apellido", campo: "apellido" },
   { nombre: "Correo", campo: "email" },
-  { nombre: "Proveedor", campo: "company.name" },
+  { nombre: "Proveedor", campo: "Company.nombre" },
   { nombre: "Rol", campo: "rol" },
-  { nombre: "Fecha de Creación", campo: "createdAt" },
+  {
+    nombre: "Fecha de Creación",
+    campo: "createdAt",
+    body: (rowData: any) => <p>{rowData?.createdAt?.split("T")[0]}</p>,
+  },
 ];

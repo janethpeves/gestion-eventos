@@ -87,6 +87,14 @@ export const AddModal = ({ postFetchData, onHideModal }: PropsAddModal) => {
                     )}
                 </div>
               ))}
+              <TextBoxField
+                textLabel={"Rol"}
+                value={"Cliente"}
+                name="rol"
+                onChange={() => {}}
+                disabled
+                direction="column"
+              />
             </div>
           </div>
           {/* Footer */}

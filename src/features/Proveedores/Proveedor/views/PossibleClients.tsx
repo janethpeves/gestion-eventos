@@ -25,7 +25,7 @@ export const PossiblesClients = ({
   });
   const onAsignClient = (data: any) => {
     asignClient.postFetchData(
-      { companyId: proveedor?.userId },
+      { companyId: proveedor?.id },
       `/${data?.client?.id}/proveedor`,
     );
     dispatch(clearClient(data));

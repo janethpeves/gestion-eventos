@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
             children: [{ index: true, element: <Dashboard /> }],
           },
           {
-            path: "/clientes",
+            path: "/users",
             element: <ProtectedRoute allowedRoles={["ADMIN"]} />,
             children: [{ index: true, element: <Clientes /> }],
           },

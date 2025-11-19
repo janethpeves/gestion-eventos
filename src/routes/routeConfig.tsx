@@ -25,8 +25,8 @@ export const appRoutes: RouteConfig[] = [
     roles: ["CLIENTE", "ADMIN"],
   },
   {
-    label: "Clientes",
-    path: "/clientes",
+    label: "Usuarios",
+    path: "/users",
     icon: <FaUser />,
     roles: ["ADMIN"],
   },
